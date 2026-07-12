@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * BTrace 2.2.1 仅支持到JDK21, JDK25不支持, 会出现注入失败, 原因是: JDK25 在删减sun.security模块, 导致依赖缺失
  * @author zzm
  */
 public class BTraceTest {
-
     public int add(int a, int b) {
         return a + b;
     }
@@ -25,19 +25,22 @@ public class BTraceTest {
     }
 }
 
+
+
+
 /* BTrace Script Template
-import com.sun.btrace.annotations.*;
-        import static com.sun.btrace.BTraceUtils.*;
+import org.openjdk.btrace.core.annotations.*;
+import static org.openjdk.btrace.core.BTraceUtils.*;
 
 @BTrace
 public class TracingScript {
     @OnMethod(
-            clazz="org.fenixsoft.monitoring.BTraceTest",
+            clazz="org.fenixsoft.jvm.chapter4.BTraceTest",
             method="add",
             location=@Location(Kind.RETURN)
     )
 
-    public static void func(@Self org.fenixsoft.monitoring.BTraceTest instance,int a,int b,@Return int result) {
+    public static void func(@Self org.fenixsoft.jvm.chapter4.BTraceTest instance,int a,int b,@Return int result) {
         println("调用堆栈:");
         jstack();
         println(strcat("方法参数A:",str(a)));
