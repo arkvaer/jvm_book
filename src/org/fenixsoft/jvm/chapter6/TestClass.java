@@ -7,15 +7,17 @@ package org.fenixsoft.jvm.chapter6;
  */
 public class TestClass {
     private int m;
-    private boolean b;
-    private String s;
-    private byte c;
-    private short d;
-    private long l;
-    private static final float f = 1;
 
-    public int inc() throws Exception {
-
-        return m + 1;
+    public int inc() {
+        int x;
+        try {
+            x = 1;
+            return x;
+        } catch (RuntimeException e) {
+            x = 2;
+            return x;
+        } finally {
+            x = 3;
+        }
     }
 }
